@@ -127,7 +127,7 @@ function initialize() {
   });
 
   (function () {
-    var switchTimeMs = 5000;
+    var switchTimeMs = 10000;
     var banners = [];
     var div = $('#SponsorBox');
     var setNextSrc = function () {
