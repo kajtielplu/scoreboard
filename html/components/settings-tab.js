@@ -290,6 +290,13 @@ function createScoreBoardViewPreviewRows(table, type) {
     )
   );
 
+  var sponsorImageDuration = $('<label>Sponsor Image Duration: </label>').add(
+    WSControl(
+      'ScoreBoard.Settings.Setting(ScoreBoard.' + type + '_SponsorImageDuration)',
+      $('<input type="number" min="1" value="5000">')
+    ) 
+  );
+
   var customPageViewSelect = $('<label>Custom Page View: </label>')
     .add(mediaSelect('ScoreBoard.Settings.Setting(ScoreBoard.' + type + '_CustomHtml)', 'custom', 'view', 'Page'))
     .attr('ApplyPreview', 'CustomHtml');
@@ -331,6 +338,7 @@ function createScoreBoardViewPreviewRows(table, type) {
     .find('td')
     .first()
     .next()
+    .append(sponsorImageDuration)
     .next()
     .append(customPageViewSelect);
 }
