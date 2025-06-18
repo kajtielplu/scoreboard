@@ -668,22 +668,22 @@ public class GameImpl extends ScoreBoardEventProviderImpl<Game> implements Game 
                 !quickClockControl(Button.STOP)) {
                 autostartRan = false;
 
-                if (isInJam()) {
-                    createSnapshot(ACTION_STOP_JAM);
-                    _endJam(false);
-                    finishReplace();
-                } else if (getCurrentTimeout().isRunning()) {
-                    createSnapshot(ACTION_STOP_TO);
-                    _endTimeout(false);
-                    finishReplace();
-                } else if (!lc.isRunning()) {
-                    if (isOvertimeConditions(true)) {
-                        startOvertime();
-                        finishReplace();
-                    } else {
-                        createSnapshot(ACTION_LINEUP);
-                        _startLineup();
-                        finishReplace();
+                if (isInJam()) {                                    //if jam is running
+                    createSnapshot(ACTION_STOP_JAM);                //stop the jam
+                    _endJam(false);                  //
+                    finishReplace();                                //
+                } else if (getCurrentTimeout().isRunning()) {       //if timeout is running
+                    createSnapshot(ACTION_STOP_TO);                 //stop the timeout
+                    _endTimeout(false);              //go to function _endTimeout()
+                    finishReplace();                                //
+                } else if (!lc.isRunning()) {                       //if lineup clock is not running
+                    if (isOvertimeConditions(true)) {   //and overtime conditions are met
+                        startOvertime();                            //start overtime
+                        finishReplace();                            //
+                    } else {                                        //but if overtime conditions not met
+                        createSnapshot(ACTION_LINEUP);              //start lineup
+                        _startLineup();                             //
+                        finishReplace();                            //
                     }
                 }
             }
@@ -860,8 +860,8 @@ public class GameImpl extends ScoreBoardEventProviderImpl<Game> implements Game 
                 _possiblyEndPeriod();
             } else {
                 if (get(NO_MORE_JAM)) { pc.start(); }
-                _startLineup();
-                lc.set(Clock.NAME, "Post Timeout");
+                _startLineup();                             //these two lines trigger the
+                lc.set(Clock.NAME, "Post Timeout");   //post-timeout lineup clock
             }
         }
         jsonSnapshotter.writeOnNextUpdate();
@@ -1008,7 +1008,8 @@ public class GameImpl extends ScoreBoardEventProviderImpl<Game> implements Game 
     public String getLabel(Button button) { return get(LABEL, button.toString()).getValue(); }
     public void setLabel(Button button, String label) { add(LABEL, new ValWithId(button.toString(), label)); }
     protected void setLabels() {
-        setLabel(Button.START, isInJam() || (getCurrentTimeout().isRunning() && !getBoolean(Rule.TO_JAM))
+        // do not show "start jam" label if a jam is running; otherwise show label
+        setLabel(Button.START, isInJam()
                                    ? ACTION_NONE
                                    : ACTION_START_JAM);
         setLabel(Button.STOP, isInJam()                               ? ACTION_STOP_JAM
