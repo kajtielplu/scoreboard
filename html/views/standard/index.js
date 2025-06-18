@@ -38,7 +38,8 @@
 })();
 
 WS.AfterLoad(function () {
-  const switchTimeMs = 5000;
+  // time between images; i like 10 seconds but default is 5
+  const switchTimeMs = 10000;
   const div = $('#SponsorBox');
   var lastSwitch;
   function setNextSrc() {
