@@ -655,6 +655,7 @@ public class GameImpl extends ScoreBoardEventProviderImpl<Game> implements Game 
         synchronized (coreLock) {
             if (!isInJam() && !isOfficialScore() && !quickClockControl(Button.START)) {
                 createSnapshot(ACTION_START_JAM);
+                _endTimeout(false);
                 _startJam();
                 finishReplace();
             }
