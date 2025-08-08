@@ -126,8 +126,8 @@
         sbClass="Red: NoMoreJam"
       ></div>
 
-      <!-- Sponsor Banners -->
-      <div class="ShowInIntermission ShowInLineup ShowInNoClock Clock RealTime" sbClass="sbHide: &_HideBanners">
+      <!-- real-time clock -->
+      <div class="ShowInIntermission ShowInLineup ShowInNoClock Clock RealTime">
         <div id="RealTime">00:00:00</div>
         <script>
         function startTime() {
@@ -145,6 +145,15 @@
           return i;
         }
         </script>
+      </div>
+      <!-- Intermission -->
+      <div class="ShowInIntermission Clock Intermission">
+        <div
+          class="Message Box AutoFit"
+          sbPrefix="#: ScoreBoard.Settings.Setting(ScoreBoard.Intermission : )"
+          sbDisplay="#.*, OfficialScore, ClockDuringFinalScore, Clock(Intermission).Number, Rule(Period.Number): sbToIntermissionDisplay"
+        ></div>
+        <div class="Time Box AutoFit" sbContext="Clock(Intermission)" sbDisplay="Time, Direction: sbToTime"></div>
       </div>
     </div>
     <div class="DisplayPane Show" id="cover"></div>
